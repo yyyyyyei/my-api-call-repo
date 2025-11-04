@@ -1,0 +1,22 @@
+name: API Call Demo
+on:
+  workflow_dispatch:
+
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+    env:
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Print Actor
+        run: |
+          echo "실행자: $GITHUB_ACTOR"
+
+      - name: Call GitHub API
+        run: |
+          BASE_URL="https://api.github.com/repos/${{ github.repository }}"
+          echo "요청 URL: $BASE_URL"
+          curl -H "Authorization: Bearer $TOKEN" \
+               -H "Accept: application/vnd.github+json" \
+               "$BASE_URL"
